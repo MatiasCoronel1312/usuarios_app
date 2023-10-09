@@ -1,25 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { userApi } from '../api/userApi'
+import React from 'react'
+import { useUsers } from '../hooks/useUsers'
+
 
 export const UsersPage = () => {
 
-    const [users, setUsers] = useState([]);
-
-
-    useEffect(()=> {
-        getUsers();
-    }, [])
-
-    const getUsers = () => {
-        userApi.get("https://reqres.in/api/users?page=2")
-        .then( resp => {              
-            const email = resp.data.data;
-            setUsers(email);
-            //console.log(email);                    
-        })
-    }
-    
-        
+  const { users } = useUsers();          
 
   return (
     <div className="mt-5">
@@ -29,18 +14,24 @@ export const UsersPage = () => {
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Email</th>
                     <th>Name</th>
+                    <th>Email</th>                    
                     <th>Avatar</th>
                 </tr>
             </thead>
             <tbody>
                 {users.map( user => (
-                    <tr>
+                    <tr key={user.id}>
                         <td>{user.id}</td>
-                        <td>{user.email}</td>
                         <td>{user.first_name} {user.last_name}</td>
-                        <td>Avatar</td>
+                        <td>{user.email}</td>                        
+                        <td>
+                            <img
+                                src={user.avatar}
+                                alt='avatar'
+                                className='img-thumbnail'
+                            />
+                        </td>
                     </tr>
                 ))}                
             </tbody>
