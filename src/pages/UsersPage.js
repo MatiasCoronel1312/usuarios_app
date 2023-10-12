@@ -1,5 +1,6 @@
 import React from 'react'
 import { useUsers } from '../hooks/useUsers'
+import { UserRow } from '../components/UserRow';
 
 
 export const UsersPage = () => {
@@ -20,20 +21,14 @@ export const UsersPage = () => {
                 </tr>
             </thead>
             <tbody>
-                {users.map( user => (
-                    <tr key={user.id}>
-                        <td>{user.id}</td>
-                        <td>{user.first_name} {user.last_name}</td>
-                        <td>{user.email}</td>                        
-                        <td>
-                            <img
-                                src={user.avatar}
-                                alt='avatar'
-                                className='img-thumbnail'
-                            />
-                        </td>
-                    </tr>
-                ))}                
+                {
+                    users.map( user => (
+                        <UserRow
+                            key={user.id}
+                            user={ user }
+                        />
+                    ))
+                }                
             </tbody>
         </table>
     </div>
